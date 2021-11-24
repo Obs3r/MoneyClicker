@@ -1,0 +1,30 @@
+
+/*button:hover {
+    background-color: green;
+}*/
+.un {
+    max-width: 20%;
+	height: auto;
+}
+.droite{
+    width: 20%;
+    float: right;
+    text-align : right;
+}
+.center{
+    /*width: 33%;*/
+    float: center;
+    text-align : center;
+}
+.gauche{
+    width: 33%;
+    float: left;
+    text-align : left;
+}
+
+@media screen and (max-width: 600px) {
+    .gauche, .center {
+      width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+      text-align: left;
+    }
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Monnaie Cliker</title>
+    <link rel="stylesheet" href="css.css"/>
+    <!-- Library -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+</head>
+
+<body>
+<div id="root">
+
+</div>
+<script type="text/babel">
+
+class App extends React.Component {
+
+
+  constructor(){
+    super();
+    this.state = {
+      counter: 0,
+      TireLire:{
+        nombre: 0,
+        cost: 10,
+      },
+
+      SacDeBillet:{
+        nombre: 0,
+        cost: 20,
+      },
+
+      CoffreDeMonnaie:{
+        nombre: 0,
+        cost: 25,
+      },
+
+      ChaudronDeMonnaie:{
+        nombre: 0,
+        cost: 35,
+      },
+
+      Bank:{
+        nombre: 0,
+        cost: 75,
+      }
+    };
+
+    this.onIncrement = this.onIncrement.bind(this);
+    this.AjoutTirelire = this.AjoutTirelire.bind(this);
+    this.refresh = this.refresh.bind(this);
+    this.AjoutSacDeBillet = this.AjoutSacDeBillet.bind(this);
+    this.AjoutCoffreDeMonnaie = this.AjoutCoffreDeMonnaie.bind(this);
+    this.AjoutChaudronDeMonnaie = this.AjoutChaudronDeMonnaie.bind(this);
+    this.AjoutBank = this.AjoutBank.bind(this);
+    
+
+    this.interval = setInterval(this.refresh, 100);
+
+  }
+
+
+
+
+
+
+
+      render() {
+        return (
+          <div>
+            <div class="droite">
+             <h2><img class="un" src="coin.png"/> : {Math.round(this.state.counter)}</h2>
+             <h3><img class="un" src="pig.png"/> : {this.state.TireLire.nombre}</h3>
+             <h3><img class="un" src="bag.png"/> : {this.state.SacDeBillet.nombre}</h3>
+             <h3><img class="un" src="caufre.png"/> : {this.state.CoffreDeMonnaie.nombre}</h3>
+             <h3><img class="un" src="chaudron.png"/> : {this.state.ChaudronDeMonnaie.nombre}</h3>
+             <h3><img class="un" src="bank.png"/> : {this.state.Bank.nombre}</h3>
+             </div>
+
+
+             <div class="gauche">
+             <button  class="TireLire" disabled={this.state.counter < this.state.TireLire.cost} onClick={this.AjoutTirelire}>
+              AJouter Tirelire({this.state.TireLire.cost})
+              </button><br/>
+              <button  class="SacDeBillet" disabled={this.state.counter < this.state.SacDeBillet.cost} onClick={this.AjoutSacDeBillet}>
+              AJouter un Sac de billet({this.state.SacDeBillet.cost})
+              </button><br/>
+              <button  class="CoffreDeMonnaie" disabled={this.state.counter < this.state.CoffreDeMonnaie.cost} onClick={this.AjoutCoffreDeMonnaie}>
+              AJouter un Coffre de monnaie({this.state.CoffreDeMonnaie.cost})
+              </button><br/>
+              <button  class="ChaudronDeMonnaie" disabled={this.state.counter < this.state.ChaudronDeMonnaie.cost} onClick={this.AjoutChaudronDeMonnaie}>
+              AJouter un Chaudron de monnaie({this.state.ChaudronDeMonnaie.cost})
+              </button><br/>
+              <button  class="Bank" disabled={this.state.counter < this.state.Bank.cost} onClick={this.AjoutBank}>
+              AJouter une Bank ({this.state.Bank.cost})
+              </button><br/>
+              </div>
+
+              <div class="center">
+             <button class="Monnaie" onClick={this.onIncrement}><img src="coin.png"/></button>
+            </div>
+          </div>
+        )
+      }
+      /**
+       * AJout de tirelire, SacDeBillet, CoffreDeMonnaie au compteur
+      */
+      refresh(){
+
+        const BankIncome = (this.state.Bank.nombre * 5 / 15)
+
+        const ChaudronDeMonnaieIncome = (this.state.ChaudronDeMonnaie.nombre * 2 / 10)
+
+        const CoffreDeMonnaieIncome = (this.state.CoffreDeMonnaie.nombre * 2 / 7)
+
+        const SacDeBilletIncome = (this.state.SacDeBillet.nombre * 2 / 5)
+
+        this.setState({
+          counter: this.state.counter + this.state.TireLire.nombre * 2 / 10 + SacDeBilletIncome + CoffreDeMonnaieIncome + ChaudronDeMonnaieIncome + BankIncome,
+        })
+      }
+      
+    /**
+      *Bonus Ajout d'une Bank
+      */
+      AjoutBank(){
+
+        const { Bank } = this.state;
+
+        if(this.state.counter >Bank.cost){
+            this.setState({
+              counter: this.state.counter - Bank.cost,
+              Bank: { 
+              cost: Math.round(Bank.cost * 2),
+              nombre: Bank.nombre + 1,
+      },
+    })
+  }
+}
+
+
+      /**
+      *Bonus Ajout d'un Chaudron de Monnaie
+      */
+      AjoutChaudronDeMonnaie(){
+
+        const { ChaudronDeMonnaie } = this.state;
+
+        if(this.state.counter >ChaudronDeMonnaie.cost){
+            this.setState({
+              counter: this.state.counter - ChaudronDeMonnaie.cost,
+              ChaudronDeMonnaie: { 
+              cost: Math.round(ChaudronDeMonnaie.cost * 2),
+              nombre: ChaudronDeMonnaie.nombre + 1,
+      },
+    })
+  }
+}
+
+      /**
+      *Bonus Ajout d'un Coffre de monnaie
+      */
+      AjoutCoffreDeMonnaie(){
+
+        const { CoffreDeMonnaie } = this.state;
+
+        if(this.state.counter >CoffreDeMonnaie.cost){
+            this.setState({
+              counter: this.state.counter - CoffreDeMonnaie.cost,
+              CoffreDeMonnaie: { 
+              cost: Math.round(CoffreDeMonnaie.cost * 2),
+              nombre: CoffreDeMonnaie.nombre + 1,
+      },
+    })
+  }
+}
+
+      /**
+      *Bonus Ajout d'un Sac de billet
+      */
+      AjoutSacDeBillet(){
+
+        const { SacDeBillet } = this.state;
+
+        if(this.state.counter >SacDeBillet.cost){
+            this.setState({
+              counter: this.state.counter - SacDeBillet.cost,
+              SacDeBillet: { 
+              cost: Math.round(SacDeBillet.cost * 1.5),
+              nombre: SacDeBillet.nombre + 1,
+      },
+    })
+  }
+}
+
+      /**
+      *Bonus Ajout d'une Tirelire
+      */
+      AjoutTirelire(){
+
+        const { TireLire } = this.state;
+
+        if(this.state.counter >TireLire.cost){
+          this.setState({
+            counter: this.state.counter - TireLire.cost,
+            TireLire: { 
+            cost: Math.round(TireLire.cost * 1.5),
+            nombre: TireLire.nombre + 1,
+      },
+    })
+  }
+}
+     
+
+    /**
+    *Incrémenter + 1 au compteur
+     */
+
+    onIncrement() {
+      this.setState({
+        counter: this.state.counter + 1,
+
+      })
+    }
+  }
+
+
+  // Rendu dans le DOM
+  ReactDOM.render(
+    <App/>,
+    document.getElementById('root')
+  );
+</script>
+</body>
+
+</html>
